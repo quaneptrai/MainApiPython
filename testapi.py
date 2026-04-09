@@ -285,19 +285,14 @@ async def smart_match(text: str, target: str = "job", model: str = "vntuan-long"
 
     matches = [{"score": round(res['score']*100, 2), "info": res['metadata']} for res in results['matches']]
     return {"results": matches}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8001)
 @app.post("/jobposting")
 def create_jobposting(jobs: List[JobPosting]):
     conn = None
     try:
-        conn = get_conn()
+        conn = get_db_conn()
         cursor = conn.cursor()
 
         for job in jobs:
-            # 1. Xử lý Deadline (Chuyển "dd/mm/yyyy" -> ISO format cho SQL)
             deadline_dt = None
             if job.Deadline:
                 try:
@@ -349,3 +344,6 @@ def create_jobposting(jobs: List[JobPosting]):
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         if conn: conn.close()
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8001)
