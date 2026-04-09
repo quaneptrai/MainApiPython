@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 
 from selenium import webdriver
@@ -332,3 +333,15 @@ if __name__ == "__main__":
 
     print("Done saved to jobs.json")
     print(f"Saved {len(results)} JSON objects")
+=======
+from pinecone import Pinecone
+
+pc = Pinecone(api_key="pcsk_3CPrZH_65UmbWfwGXiJYiFqzciZudoXx57Au2F1jNysFMvTAj5tZqbQriUtR7o8wRSGTda")
+
+# Lấy danh sách index
+indexes = pc.list_indexes()
+
+print("Indexes found:")
+for idx in indexes:
+    print("-", idx["name"])
+>>>>>>> 2889c005460580cfc56524371d405006df9a3b8a
